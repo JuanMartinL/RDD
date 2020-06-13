@@ -1,0 +1,16 @@
+---
+title: "Assignment 4 - RDD: Replication of Hansen (2015)"
+author: "Juan Martín Londoño Zuluaga"
+date: "12/6/2020"
+output: pdf_document
+---
+
+# 1. Create a new github repo named “RDD”.  
+
+You can find the GitHub repo with the following link: https://github.com/JuanMartinL/RDD.
+
+# 2. Briefly summarize this paper.
+
+Benjamin Hansen paper "Punishment and Deterrence: Evidence from Drunk Driving" 
+
+

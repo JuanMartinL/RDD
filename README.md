@@ -1,2 +1,2 @@
 # RDD
- Replication of Benjamin Hansen (2015) article.
+ Replication of Benjamin Hansen article: "Punishment and Deterrence: Evidence from Drunk Driving" (2015).
