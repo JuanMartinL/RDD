@@ -141,11 +141,20 @@ eststo clear
 * 8. Recreate the top panel of Figure 3 according to the following rule: a. Fit linear fit using only observations with less than 0.15 bac on the bac1 and b.Fit quadratic fit using only observations with less than 0.15 bac on the bac1.
 ****************************************
 
-cmogram recidivism bac1 if bac1 < 0.15, cut(0.08) scatter title("Panel A. All Ofenders.") line(0.08) qfitci graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white)))
+cmogram recidivism bac1 if bac1 < 0.15, cut(0.08) scatter line(0.08) qfitci title("Panel A. All Ofenders.") graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white))) 
 graph export Figures\panelall_sq.png, replace
 graph save Figures\panelall_sq, replace
 
-cmogram acc bac1 if bac1 <= 0.15, cut(0.08) scatter title("Panel A. All Ofenders.") line(0.08) lfitci graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white)))
+cmogram recidivism bac1 if bac1 <= 0.15, cut(0.08) scatter line(0.08) lfitci title("Panel A. All Ofenders.")  graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white)))
 graph export Figures\panelall_lm.png, replace
 graph save Figures\panelall_lm, replace
 
+gr combine Figures\panelall_lm.gph Figures\panelall_sq.gph, graphregion(color(white))
+graph export Figures\panelall.png, replace
+graph save Figures\panelall, replace
+
+
+
+*********************************
+* End of program
+*********************************

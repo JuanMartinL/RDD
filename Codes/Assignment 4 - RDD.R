@@ -68,9 +68,12 @@ for (placebo in seq(0.04, 0.1, 0.01)) {
 
 
 # Looking at the histogram, searching for manipulating evidence
-ggplot(data = BDD[(BDD$bac1 > 0.06 & BDD$bac1 < 0.09),]) +
+ggplot(data = BDD) +
   geom_histogram(aes(bac1), binwidth = 0.001) +
-  geom_vline(xintercept = 0.08, linetype = "dashed", color = "red")
+  geom_vline(xintercept = 0.08, linetype = "dashed", color = "red") +
+  ggtitle("Histogram of BAC") +
+  xlab("BAC") + 
+  ylab("Frequency")
 
 
 
@@ -116,55 +119,3 @@ ggplot() +
 # Plotting it
 rdplot(y = BDD$recidivism,
        x = BDD$bac1, c = 0.08)
-
-
-#------------------------------------
-# 6. Recreate Figure 2 panel A-D. 
-#------------------------------------
-
-# Aggregating the data
-categories <- BDD$bac1
-
-demmeans <- split(BDD$recidivism, cut(BDD$bac1, length(BDD$bac1))) %>% 
-  lapply(mean) %>% 
-  unlist()
-
-agg_BDD <- data.frame(recidivism = demmeans, bac1 = BDD$bac1)
-
-# Plotting
-BDD <- BDD %>% 
-  mutate(gg_group = case_when(bac1 > 0.08 ~ 1, TRUE ~ 0))
-
-ggplot(BDD, aes(bac1, recidivism)) +
-  geom_point(aes(x = bac1, y = recidivism), data = agg_BDD) +
-  stat_smooth(aes(bac1, recidivism, group = gg_group), method = "lm") +
-  geom_vline(xintercept = 0.08) +
-  xlim(0,0.2)
-
-
-# Male
-#----------------------------
-
-# Aggregating the data
-categories <- BDD$bac1
-
-demmeans <- split(BDD$male, cut(BDD$bac1, length(BDD$bac1))) %>% 
-  lapply(mean) %>% 
-  unlist()
-
-agg_BDD <- data.frame(male = demmeans, bac1 = BDD$bac1)
-
-# Plotting
-BDD <- BDD %>% 
-  mutate(gg_group = case_when(bac1 > 0.08 ~ 1, TRUE ~ 0))
-
-ggplot(BDD, aes(bac1, male)) +
-  geom_point(aes(x = bac1, y = male), data = agg_BDD) +
-  stat_smooth(aes(bac1, male, group = gg_group), method = "lm") +
-  geom_vline(xintercept = 0.08) +
-  xlim(0,0.2)
-
-rdplot(y = BDD$male, x = BDD$bac1, c = 0.08)
-
-reg_p <- RDestimate(male ~ bac1, data = BDD, cutpoint = 0.08, bw = c(0.03, 0.13))
-plot(reg_p)
