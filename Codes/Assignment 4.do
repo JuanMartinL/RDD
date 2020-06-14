@@ -46,7 +46,7 @@ eststo: reg acc bac1 dbac dbac#c.bac1 if bac1 >= 0.03 & bac1 <= 0.13, robust
 	// Don't forget c. for continuous variables
 
 
-esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\example.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding BAC Thresholds on Predetermined Characteristics table\label{tab1}) replace
+esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\RDD\Tables\Table2.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding BAC Thresholds on Predetermined Characteristics table\label{tab1}) replace
 
 eststo clear
 
@@ -99,5 +99,20 @@ graph save Figures\panel_controls, replace
 graph export Figures\panel_control.png, replace
 
 
-* 5. Recreate Table 2 but only white male, age and accident (acc) as dependent variables.
+* 7. Estimate equation (1) in Hansen's paper with recidivism (recid) as the outcome. Your table should have three columns and two A and B panels associated with the different bandwidths: a. Column 1: control for the bac1 linearly, b. Column 2: interact bac1 with cutoff linearly and c. Column 3: interact bac1 with cutoff linearly and as a quadratic.
 **********************************
+
+* a.
+eststo: reg recidivism dbac bac1 aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
+
+* b.
+eststo: reg recidivism dbac bac1 c.bac1#dbac aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
+
+*c. 
+*gen bac1_sq = bac1^2
+eststo: reg recidivism dbac bac1 dbac#c.bac1 dbac#c.bac1_sq aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
+
+
+esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\RDD\Tables\Table3.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding the 0.08 BAC Thresholds on Recidivism table\label{tab1}) replace
+
+eststo clear

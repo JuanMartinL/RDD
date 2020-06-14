@@ -1,0 +1,29 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Regression Discontinuity Estimates for the Effect of Exceeding BAC Thresholds on Predetermined Characteristics table\label{tab1}}
+\begin{tabular}{l*{4}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}\\
+                    &\multicolumn{1}{c}{white}&\multicolumn{1}{c}{male}&\multicolumn{1}{c}{aged}&\multicolumn{1}{c}{acc}\\
+\hline
+bac1                &      0.0788         &      -0.210         &      -69.16\sym{***}&      -1.096\sym{***}\\
+                    &     (0.214)         &     (0.240)         &     (7.220)         &     (0.186)         \\
+[1em]
+dbac                &     0.00445         &     -0.0184         &      -6.224\sym{***}&      -0.154\sym{***}\\
+                    &    (0.0175)         &    (0.0198)         &     (0.586)         &    (0.0153)         \\
+[1em]
+dbac=0 $\times$ bac1&           0         &           0         &           0         &           0         \\
+                    &         (.)         &         (.)         &         (.)         &         (.)         \\
+[1em]
+dbac=1 $\times$ bac1&      0.0156         &       0.307         &       76.05\sym{***}&       1.888\sym{***}\\
+                    &     (0.234)         &     (0.263)         &     (7.844)         &     (0.203)         \\
+[1em]
+Constant            &       0.840\sym{***}&       0.801\sym{***}&       39.45\sym{***}&       0.171\sym{***}\\
+                    &    (0.0143)         &    (0.0159)         &     (0.483)         &    (0.0126)         \\
+\hline
+Observations        &       89967         &       89967         &       89967         &       89967         \\
+\hline\hline
+\multicolumn{5}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{5}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

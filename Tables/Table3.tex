@@ -1,0 +1,47 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Regression Discontinuity Estimates for the Effect of Exceeding the 0.08 BAC Thresholds on Recidivism table\label{tab1}}
+\begin{tabular}{l*{3}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}\\
+                    &\multicolumn{1}{c}{recidivism}&\multicolumn{1}{c}{recidivism}&\multicolumn{1}{c}{recidivism}\\
+\hline
+dbac                &     -0.0273\sym{***}&     -0.0591\sym{***}&       0.113         \\
+                    &   (0.00403)         &    (0.0152)         &    (0.0843)         \\
+[1em]
+bac1                &       0.321\sym{***}&     -0.0429         &       2.902         \\
+                    &    (0.0748)         &     (0.187)         &     (1.637)         \\
+[1em]
+aged                &   -0.000847\sym{***}&   -0.000854\sym{***}&   -0.000854\sym{***}\\
+                    & (0.0000849)         & (0.0000850)         & (0.0000850)         \\
+[1em]
+white               &      0.0162\sym{***}&      0.0162\sym{***}&      0.0162\sym{***}\\
+                    &   (0.00280)         &   (0.00280)         &   (0.00280)         \\
+[1em]
+male                &      0.0332\sym{***}&      0.0332\sym{***}&      0.0332\sym{***}\\
+                    &   (0.00233)         &   (0.00233)         &   (0.00233)         \\
+[1em]
+acc                 &     0.00444         &     0.00421         &     0.00418         \\
+                    &   (0.00345)         &   (0.00345)         &   (0.00345)         \\
+[1em]
+dbac=0 $\times$ bac1&                     &           0         &           0         \\
+                    &                     &         (.)         &         (.)         \\
+[1em]
+dbac=1 $\times$ bac1&                     &       0.438\sym{*}  &      -4.210\sym{*}  \\
+                    &                     &     (0.204)         &     (2.111)         \\
+[1em]
+dbac=0 $\times$ bac1\_sq&                     &                     &      -24.72         \\
+                    &                     &                     &     (13.74)         \\
+[1em]
+dbac=1 $\times$ bac1\_sq&                     &                     &       8.014         \\
+                    &                     &                     &     (6.276)         \\
+[1em]
+Constant            &      0.0853\sym{***}&       0.109\sym{***}&      0.0262         \\
+                    &   (0.00672)         &    (0.0131)         &    (0.0473)         \\
+\hline
+Observations        &       89967         &       89967         &       89967         \\
+\hline\hline
+\multicolumn{4}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{4}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}
