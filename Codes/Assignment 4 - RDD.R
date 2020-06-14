@@ -21,6 +21,8 @@ library(stargazer);library(readxl);library(tidyverse);library(ggplot2)
 library(rddensity) # McCray test
 library(rdd)
 library(estimatr) # Robust LM
+library(stats)
+library(rdrobust)
 
 #------------------------------------
 # Data Base
@@ -76,8 +78,15 @@ ggplot(data = BDD[(BDD$bac1 > 0.06 & BDD$bac1 < 0.09),]) +
 # 5. Recreate Table 2 but only white male, age and accident (acc) as dependent variables.
 #------------------------------------
 
-reg1 <- lm_robust(recidivism ~ bac1 + dbac1 + dbac1*bac1 + aged + male + white, data = BDD[(BDD$bac1 >= 0.075 & BDD$bac1 <= 0.085),])
-summary(reg1)
+reg_w <- lm_robust(white ~ bac1 + dbac1 + dbac1*bac1, data = BDD[(BDD$bac1 >= 0.03 & BDD$bac1 <= 0.13),])
+summary(reg_w)
+
+reg_m <- lm_robust(male ~ bac1 + dbac1 + dbac1*bac1, data = BDD[(BDD$bac1 >= 0.03 & BDD$bac1 <= 0.13),])
+summary(reg_m)
+
+reg_a <- lm_robust(aged ~ bac1 + dbac1 + dbac1*bac1, data = BDD[(BDD$bac1 >= 0.03 & BDD$bac1 <= 0.13),])
+summary(reg_a)
+
 
 
 # Looking at the Kernels
@@ -109,11 +118,53 @@ rdplot(y = BDD$recidivism,
        x = BDD$bac1, c = 0.08)
 
 
+#------------------------------------
+# 6. Recreate Figure 2 panel A-D. 
+#------------------------------------
 
-BDD_poly <- BDD[(BDD$bac1 >= 0.075 & BDD$bac1 <= 0.085),]
+# Aggregating the data
+categories <- BDD$bac1
 
-rd1 <- rdrobust(y = BDD$recidivism,
-                x = BDD$bac1, c = 0.08)
-summary(rd1)
+demmeans <- split(BDD$recidivism, cut(BDD$bac1, length(BDD$bac1))) %>% 
+  lapply(mean) %>% 
+  unlist()
+
+agg_BDD <- data.frame(recidivism = demmeans, bac1 = BDD$bac1)
+
+# Plotting
+BDD <- BDD %>% 
+  mutate(gg_group = case_when(bac1 > 0.08 ~ 1, TRUE ~ 0))
+
+ggplot(BDD, aes(bac1, recidivism)) +
+  geom_point(aes(x = bac1, y = recidivism), data = agg_BDD) +
+  stat_smooth(aes(bac1, recidivism, group = gg_group), method = "lm") +
+  geom_vline(xintercept = 0.08) +
+  xlim(0,0.2)
 
 
+# Male
+#----------------------------
+
+# Aggregating the data
+categories <- BDD$bac1
+
+demmeans <- split(BDD$male, cut(BDD$bac1, length(BDD$bac1))) %>% 
+  lapply(mean) %>% 
+  unlist()
+
+agg_BDD <- data.frame(male = demmeans, bac1 = BDD$bac1)
+
+# Plotting
+BDD <- BDD %>% 
+  mutate(gg_group = case_when(bac1 > 0.08 ~ 1, TRUE ~ 0))
+
+ggplot(BDD, aes(bac1, male)) +
+  geom_point(aes(x = bac1, y = male), data = agg_BDD) +
+  stat_smooth(aes(bac1, male, group = gg_group), method = "lm") +
+  geom_vline(xintercept = 0.08) +
+  xlim(0,0.2)
+
+rdplot(y = BDD$male, x = BDD$bac1, c = 0.08)
+
+reg_p <- RDestimate(male ~ bac1, data = BDD, cutpoint = 0.08, bw = c(0.03, 0.13))
+plot(reg_p)
