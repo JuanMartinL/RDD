@@ -37,5 +37,8 @@ rddensity bac1, all c(0.08) plot graph_options(graphregion(color(white)) title("
 
 * 5. Recreate Table 2 but only white male, age and accident (acc) as dependent variables.
 **********************************
-regress white bac1 dbac dbac#bac1 if bac1 >= 0.03 & bac1 <= 0.13, robust
+eststo: reg white bac1 dbac dbac#c.bac1 if bac1 >= 0.03 & bac1 <= 0.13, robust  
+eststo: reg male bac1 dbac dbac#c.bac1 if bac1 >= 0.03 & bac1 <= 0.13, robust  
+eststo: reg white bac1 dbac dbac#c.bac1 if bac1 >= 0.03 & bac1 <= 0.13, robust  
+	// Don't forget c. for continuous variables
 
