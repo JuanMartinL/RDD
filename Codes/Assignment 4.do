@@ -102,17 +102,50 @@ graph export Figures\panel_control.png, replace
 * 7. Estimate equation (1) in Hansen's paper with recidivism (recid) as the outcome. Your table should have three columns and two A and B panels associated with the different bandwidths: a. Column 1: control for the bac1 linearly, b. Column 2: interact bac1 with cutoff linearly and c. Column 3: interact bac1 with cutoff linearly and as a quadratic.
 **********************************
 
-* a.
+* Panel A
+
+	** a.
 eststo: reg recidivism dbac bac1 aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
 
-* b.
+	** b.
 eststo: reg recidivism dbac bac1 c.bac1#dbac aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
 
-*c. 
-*gen bac1_sq = bac1^2
+	**c. 
+gen bac1_sq = bac1^2
 eststo: reg recidivism dbac bac1 dbac#c.bac1 dbac#c.bac1_sq aged white male acc if bac1 >= 0.03 & bac1 <= 0.13, robust
 
 
-esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\RDD\Tables\Table3.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding the 0.08 BAC Thresholds on Recidivism table\label{tab1}) replace
+esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\RDD\Tables\Table3PanelA.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding the 0.08 BAC Thresholds on Recidivism table\label{tab1}) replace
 
 eststo clear
+
+
+* Panel B
+
+	** a.
+eststo: reg recidivism dbac bac1 aged white male acc if bac1 >= 0.055 & bac1 <= 0.105, robust
+
+	** b.
+eststo: reg recidivism dbac bac1 c.bac1#dbac aged white male acc if bac1 >= 0.055 & bac1 <= 0.105, robust
+
+	**c. 
+eststo: reg recidivism dbac bac1 dbac#c.bac1 dbac#c.bac1_sq aged white male acc if bac1 >= 0.055 & bac1 <= 0.105, robust
+
+
+esttab using "D:\Desktop\Universidad\15° Semestre\Causal Inference and Research Design\Assigments\Assignment 4\RDD\Tables\Table3PanelB.tex", se label title(Regression Discontinuity Estimates for the Effect of Exceeding the 0.08 BAC Thresholds on Recidivism table\label{tab1}) replace
+
+eststo clear
+
+
+
+* 8. Recreate the top panel of Figure 3 according to the following rule: a. Fit linear fit using only observations with less than 0.15 bac on the bac1 and b.Fit quadratic fit using only observations with less than 0.15 bac on the bac1.
+****************************************
+
+cmogram recidivism bac1 if bac1 < 0.15, cut(0.08) scatter title("Panel A. All Ofenders.") line(0.08) qfitci graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white)))
+graph export Figures\panelall_sq.png, replace
+graph save Figures\panelall_sq, replace
+
+cmogram acc bac1 if bac1 <= 0.15, cut(0.08) scatter title("Panel A. All Ofenders.") line(0.08) lfitci graphopts(xtitle("BAC") ytitle("Mean of Recividism") graphregion(color(white)))
+graph export Figures\panelall_lm.png, replace
+graph save Figures\panelall_lm, replace
+
