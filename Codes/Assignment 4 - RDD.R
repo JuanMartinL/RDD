@@ -61,7 +61,7 @@ rdplotdensity(density, BDD$bac1)
 ## Placebo test
 i = 1
 for (placebo in seq(0.04, 0.1, 0.01)) {
-  print(paste(i, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"), quote = F)
+  print(paste(placebo, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"), quote = F)
   print(rddensity(BDD$bac1, c = placebo, all = T)$test$p_jk)
   i = i + 1
 }
